@@ -15,6 +15,9 @@ class GetController extends Controller
         $g = $_GET;
         $fields= (isset($g["fields"]) && !empty($g["fields"]) ) ? explode(",",$g["fields"]) : null;
 
+        $tablesingular = substr($table,0,-1);
+        $orderBy="id_".$tablesingular;
+
         $include = isset($g['include']) && !empty($g['include'])  ? explode(",",$g['include'])  : null;
         $on = isset($g['on']) && !empty($g['on'])  ? explode(",",$g['on'])  : null;
         $where = isset($g['where']) && !empty($g['where'])  ? explode(",",$g['where']) : null;
@@ -23,6 +26,7 @@ class GetController extends Controller
         $res = DB::table($table)
         ->select($fields)
         ->where($where ? [$where] : null)
+        ->orderBy($orderBy,"asc")
         ->get();
 
 
