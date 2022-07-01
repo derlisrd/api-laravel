@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GetController;
+use App\Http\Controllers\JsonResponseController;
 
-
-Route::get("/",function(){ return response()->json(['message' => 'Not Found!'], 404);})->name("none");
+Route::get("/",[JsonResponseController::class,"error"])->name("none");
 
 Route::get("/{table}",[GetController::class,'show'])->name("ApiGet");
+
+Route::get("/{table}/{id}",[GetController::class,'find'])->name("ApiGetID");

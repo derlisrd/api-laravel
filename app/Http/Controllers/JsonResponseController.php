@@ -13,7 +13,7 @@ class JsonResponseController extends Controller
 
         $urlnext = URL::current();
         $array = array(
-            "next"=>$urlnext,
+            "url"=>$urlnext,
             "pagenumber"=>$pagenumber,
             "limit"=>$limit,
             "found"=>$found,
@@ -26,7 +26,9 @@ class JsonResponseController extends Controller
         return response()->json($array);
     }
 
-    public static function error($error){
-        return response()->json(['message' => $error],404);
+    public static function error($msj="Not found"){
+        $array = array("response"=>"error","error"=>true,"messages"=>$msj);
+
+        return response()->json($array,404);
     }
 }

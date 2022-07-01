@@ -54,4 +54,18 @@ class GetController extends Controller
 
     return JsonResponseController::error("Table not exits");
    }
+
+   public function find($table,$id){
+    if (Schema::hasTable($table)) {
+
+        $tablesingular = substr($table,0,-1);
+        $orderBy="id_".$tablesingular;
+        $find = DB::table($table)->where($orderBy,$id);
+        $res = $find->get();
+        $founded = $find->count();
+        return JsonResponseController::OkGet($res,0,1,$founded,$founded);
+    }
+
+    return JsonResponseController::error($table.$id);
+   }
 }
